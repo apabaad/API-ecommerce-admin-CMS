@@ -44,7 +44,7 @@ const UserSchema = mongoose.Schema(
         password: {
             type: String,
             required: true,
-            maxLength: 6,
+            minLength: 50,
         },
         address: {
             type: String,

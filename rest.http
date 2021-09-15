@@ -8,10 +8,10 @@ POST http://localhost:8000/api/v1/user
 Content-Type: application/json
 
 {
-    "fname" : 1234,
+    "fname" : "rupesh",
     "lname" : "Adhikari",
     "dob" : "2000-02-20", 
-    "email" : "abcdee@a.com", 
+    "email" : "abcdeeefg@a.com", 
     "password": "password",
     "phone": "040000000", 
     "address": "kent street, Belmore",
