@@ -1,0 +1,19 @@
+# user api lists
+
+### get
+GET  http://localhost:8000/api/v1/user
+
+###  create an User
+POST http://localhost:8000/api/v1/user
+Content-Type: application/json
+
+{
+    "fname" : 1234,
+    "lname" : "Adhikari",
+    "dob" : "2000-02-20", 
+    "email" : "abcdee@a.com", 
+    "password": "password",
+    "phone": "040000000", 
+    "address": "kent street, Belmore",
+    "gender": "male" 
+}
