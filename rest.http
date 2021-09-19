@@ -11,7 +11,7 @@ Content-Type: application/json
     "fname" : "rupesh",
     "lname" : "Adhikari",
     "dob" : "2000-02-20", 
-    "email" : "abcdeeefg@a.com", 
+    "email" : "abcdeeefghhh@a.com", 
     "password": "password",
     "phone": "040000000", 
     "address": "kent street, Belmore",
