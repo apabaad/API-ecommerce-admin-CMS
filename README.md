@@ -20,6 +20,7 @@ All the api will follow the following path `${routeUrl}` i.e., http://localhost
 
 All user api will follow the following endpoint `${router}/api/v1/user`
 
-| #   | API | METHOD | DESCRIPTION                                                             |
-| --- | --- | ------ | ----------------------------------------------------------------------- |
-| 1   | '/' | POST   | Expects the user info object and creates user in DB and returns message |
+| #   | API                   | METHOD | DESCRIPTION                                                             |
+| --- | --------------------- | ------ | ----------------------------------------------------------------------- |
+| 1   | '/'                   | POST   | Expects the user info object and creates user in DB and returns message |
+| 2   | '/email-verification' | POST   | Expects user's info object and check if the link is valid or not        |

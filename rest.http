@@ -11,9 +11,19 @@ Content-Type: application/json
     "fname" : "rupesh",
     "lname" : "Adhikari",
     "dob" : "2000-02-20", 
-    "email" : "abcdeeefghhh@a.com", 
+    "email" : "ee2h@a.com", 
     "password": "password",
     "phone": "040000000", 
     "address": "kent street, Belmore",
     "gender": "male" 
+}
+
+###email verification api
+
+POST http://localhost:8000/api/v1/user/email_verification
+Content-Type: application/json
+
+{
+    "pin" :"98787899",
+    "email":abc@gm.com
 }

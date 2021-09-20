@@ -6,6 +6,7 @@ import { createUniqueReset } from '../modals/reset-pin/ResetPin.modal.js'
 import { newUserFormValidation } from '../middlewares/validation.middleware.js'
 import { hashPassword } from '../helpers/bcrypt.helper.js'
 import { getRandomOTP } from '../helpers/otp.helper.js'
+import { emailProcessor } from '../helpers/mail.helper.js'
 
 Router.all('/', (req, res, next) => {
     next()
@@ -21,7 +22,7 @@ Router.post('/', newUserFormValidation, async (req, res) => {
 
         req.body.password = hashPass
         const result = await createUser(req.body)
-
+        console.log('result', result)
         if (result?._id) {
             // create unique code
             const otpLength = 8
@@ -31,9 +32,14 @@ Router.post('/', newUserFormValidation, async (req, res) => {
                 otp,
                 email: result.email,
             }
-            const data = createUniqueReset(uniqueCombo)
+            const data = await createUniqueReset(uniqueCombo)
+            console.log('from routet', data)
 
             // send email to client with unique verification link
+            if (data?._id) {
+                emailProcessor(uniqueCombo)
+            }
+
             return res.json({
                 status: 'ok',
                 message: 'User created. Please verify your email',
@@ -62,5 +68,14 @@ Router.post('/', newUserFormValidation, async (req, res) => {
 
 // Router.patch()
 // Router.delete()
+
+Router.post('/email_verification', (req, res) => {
+    try {
+        console.log(req.body)
+        res.send('ok')
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 export default Router
