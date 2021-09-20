@@ -8,3 +8,11 @@ export const createUser = (newUser) => {
         throw new Error(error)
     }
 }
+
+export const activeUser = (email) => {
+    return UserSchema.findOneAndUpdate(
+        { email: email },
+        { status: 'active' },
+        { new: true }
+    )
+}

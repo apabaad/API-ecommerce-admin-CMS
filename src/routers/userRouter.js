@@ -1,12 +1,22 @@
 import express from 'express'
 const Router = express.Router()
 
-import { createUser } from '../modals/user/User.modal.js'
-import { createUniqueReset } from '../modals/reset-pin/ResetPin.modal.js'
-import { newUserFormValidation } from '../middlewares/validation.middleware.js'
+import { activeUser, createUser } from '../modals/user/User.modal.js'
+import {
+    createUniqueReset,
+    deleteUniqueReset,
+    findUniqueReset,
+} from '../modals/reset-pin/ResetPin.modal.js'
+import {
+    newUserFormValidation,
+    emailVerificationValidation,
+} from '../middlewares/validation.middleware.js'
 import { hashPassword } from '../helpers/bcrypt.helper.js'
 import { getRandomOTP } from '../helpers/otp.helper.js'
-import { emailProcessor } from '../helpers/mail.helper.js'
+import {
+    emailProcessor,
+    emailVerificationWelcome,
+} from '../helpers/mail.helper.js'
 
 Router.all('/', (req, res, next) => {
     next()
@@ -69,13 +79,39 @@ Router.post('/', newUserFormValidation, async (req, res) => {
 // Router.patch()
 // Router.delete()
 
-Router.post('/email_verification', (req, res) => {
-    try {
-        console.log(req.body)
-        res.send('ok')
-    } catch (error) {
-        console.log(error)
+Router.post(
+    '/email_verification',
+    emailVerificationValidation,
+    async (req, res) => {
+        try {
+            //check if pin and email combo exist in reset pin db
+            const result = await findUniqueReset(res.body)
+            if (result?._id) {
+                const isUserActive = await activeUser(req.body.email)
+                if (isUserActive?._id) {
+                    emailVerificationWelcome(req.body.email)
+
+                    // delete the reset pin data
+                    deleteUniqueReset(req.body)
+                    return res.json({
+                        status: 'success',
+                        message: 'email verified, sign in now',
+                    })
+                }
+            }
+            //if yes, then update user status to active
+            res.json({
+                status: 'error',
+                message: 'Invalid or expired link',
+            })
+        } catch (error) {
+            console.log(error)
+            res.json({
+                status: 'error',
+                message: 'error, unable to process. try later',
+            })
+        }
     }
-})
+)
 
 export default Router

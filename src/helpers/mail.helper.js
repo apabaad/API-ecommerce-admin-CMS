@@ -16,7 +16,7 @@ const send = async (mailInfo) => {
 }
 
 export const emailProcessor = ({ email, otp }) => {
-    const link = `${process.env.ROOT_URL}?pin=${otp}&email=${email}`
+    const link = `${process.env.ROOT_URL}?otp=${otp}&email=${email}`
     console.log('from mail', link)
     const mailObj = {
         from: `"Eshop" <${process.env.EMAIL_USER}>`, // sender address
@@ -31,6 +31,26 @@ export const emailProcessor = ({ email, otp }) => {
         <p>
         <a href="${link}">${link}</a>
         </p>
+        <br/>
+        <p>Kind regards, </p>
+
+        `, // html body
+    }
+
+    send(mailObj)
+}
+export const emailVerificationWelcome = (email) => {
+    const mailObj = {
+        from: `"Eshop" <${process.env.EMAIL_USER}>`, // sender address
+        to: email, // list of receivers
+        subject: 'User email verified', // Subject line
+        text: 'welcome', // plain text body
+        html: `
+        <br/>
+        <p>
+        Thank you for veriication.
+        </p>
+       
         <br/>
         <p>Kind regards, </p>
 
