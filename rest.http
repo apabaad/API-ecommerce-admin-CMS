@@ -37,11 +37,15 @@ POST http://localhost:8000/api/v1/category
 Content-Type: application/json
 
 {
-    "name": "Grocery",
+    "name": "the Grocery ",
     "parentCat": null 
 
 }
 
 # fetch category / new category
-# delete categoty
+
+### delete categoty
+
+DELETE http://localhost:8000/api/v1/category/61510470e8b7c07987b3bef9
+
 #update edit category

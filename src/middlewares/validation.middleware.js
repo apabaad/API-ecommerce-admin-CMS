@@ -45,7 +45,7 @@ export const emailVerificationValidation = (req, res, next) => {
 export const newCategoryValidation = (req, res, next) => {
     const schema = Joi.object({
         name: str.required(),
-        parentCat: str.allow(''.allow(null)),
+        parentCat: str.allow(null).allow(''),
     })
     const result = schema.validate(req.body)
 
