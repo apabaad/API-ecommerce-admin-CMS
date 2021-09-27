@@ -26,7 +26,7 @@ Router.post('/', newCategoryValidation, async (req, res) => {
         const newCat = {
             name,
             slug,
-            parentCat,
+            parentCat: parentCat ? parentCat : null,
         }
 
         // insert into database
