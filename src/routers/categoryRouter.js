@@ -5,6 +5,7 @@ const Router = express.Router()
 import {
     createCategory,
     deleteCategory,
+    getCategory,
 } from '../modals/category/Category.modal.js'
 import { newCategoryValidation } from '../middlewares/validation.middleware.js'
 
@@ -14,7 +15,7 @@ Router.all('/', (req, res, next) => {
     next()
 })
 
-// for category
+// create category
 Router.post('/', newCategoryValidation, async (req, res) => {
     try {
         console.log(req.body)
@@ -51,6 +52,28 @@ Router.post('/', newCategoryValidation, async (req, res) => {
     }
 })
 
+//get category
+Router.get('/', async (req, res) => {
+    try {
+        const categories = await getCategory()
+
+        res.json({
+            status: 'success',
+            message: 'request success',
+            categories,
+        })
+    } catch (error) {
+        console.log(error.message)
+
+        res.status(500).json({
+            status: 'error',
+            message:
+                'Error, Unable to process your request please try again later',
+        })
+    }
+})
+
+//delete category
 Router.delete('/:_id', async (req, res) => {
     try {
         const { _id } = req.params //.params gets :_id from the url

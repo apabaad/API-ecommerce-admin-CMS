@@ -42,7 +42,9 @@ Content-Type: application/json
 
 }
 
-# fetch category / new category
+### fetch category / new category
+
+GET http://localhost:8000/api/v1/category
 
 ### delete categoty
 
