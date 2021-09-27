@@ -51,7 +51,7 @@ Router.post('/', newUserFormValidation, async (req, res) => {
             }
 
             return res.json({
-                status: 'ok',
+                status: 'success',
                 message: 'User created. Please verify your email',
                 result,
             })
@@ -80,7 +80,7 @@ Router.post('/', newUserFormValidation, async (req, res) => {
 // Router.delete()
 
 Router.post(
-    '/email_verification',
+    '/email-verification',
     emailVerificationValidation,
     async (req, res) => {
         try {

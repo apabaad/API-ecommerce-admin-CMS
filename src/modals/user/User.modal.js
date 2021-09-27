@@ -12,7 +12,7 @@ export const createUser = (newUser) => {
 export const activeUser = (email) => {
     return UserSchema.findOneAndUpdate(
         { email: email },
-        { status: 'active' },
+        { status: 'active', isEmailConfirm: true },
         { new: true }
     )
 }

@@ -27,7 +27,6 @@ const UserSchema = mongoose.Schema(
         dob: {
             type: Date,
             default: null,
-            required: true,
         },
         email: {
             type: String,
@@ -50,11 +49,10 @@ const UserSchema = mongoose.Schema(
             type: String,
             default: '',
             maxLength: 50,
-            required: true,
         },
         gender: {
             type: String,
-            required: true,
+
             default: '',
         },
         role: {

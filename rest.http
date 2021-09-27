@@ -11,7 +11,7 @@ Content-Type: application/json
     "fname" : "rupesh",
     "lname" : "Adhikari",
     "dob" : "2000-02-20", 
-    "email" : "ee213h@a.com", 
+    "email" : "ee3h@a.com", 
     "password": "password",
     "phone": "040000000", 
     "address": "kent street, Belmore",
@@ -20,7 +20,7 @@ Content-Type: application/json
 
 ###email verification api
 
-POST http://localhost:8000/api/v1/user/email_verification
+POST http://localhost:8000/api/v1/user/email-verification
 Content-Type: application/json
 
 {
@@ -28,3 +28,20 @@ Content-Type: application/json
     "email":"ee213h@a.com"
 }
 
+
+
+# ######### category api lists
+###  create new category
+
+POST http://localhost:8000/api/v1/category
+Content-Type: application/json
+
+{
+    "name": "Grocery",
+    "parentCat": null 
+
+}
+
+# fetch category / new category
+# delete categoty
+#update edit category
