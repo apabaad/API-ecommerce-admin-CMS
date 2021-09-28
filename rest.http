@@ -50,4 +50,16 @@ GET http://localhost:8000/api/v1/category
 
 DELETE http://localhost:8000/api/v1/category/61510470e8b7c07987b3bef9
 
-#update edit category
+
+###update edit category
+
+PATCH  http://localhost:8000/api/v1/category
+Content-Type: application/json
+
+{
+    "_id": "61525a69957c958f5de0d9a6",
+    "name": "Goldstar plus plus ",
+    "parentCat": "" 
+
+}
+
