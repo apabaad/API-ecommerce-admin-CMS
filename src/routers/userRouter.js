@@ -1,7 +1,11 @@
 import express from 'express'
 const Router = express.Router()
 
-import { activeUser, createUser } from '../modals/user/User.modal.js'
+import {
+    activeUser,
+    createUser,
+    getUserByEmail,
+} from '../modals/user/User.modal.js'
 import {
     createUniqueReset,
     deleteUniqueReset,
@@ -10,8 +14,9 @@ import {
 import {
     newUserFormValidation,
     emailVerificationValidation,
+    adminLoginValidation,
 } from '../middlewares/validation.middleware.js'
-import { hashPassword } from '../helpers/bcrypt.helper.js'
+import { hashPassword, verifyPassword } from '../helpers/bcrypt.helper.js'
 import { getRandomOTP } from '../helpers/otp.helper.js'
 import {
     emailProcessor,
@@ -113,5 +118,39 @@ Router.post(
         }
     }
 )
+
+// login
+Router.post('/login', adminLoginValidation, async (req, res) => {
+    try {
+        const { email, password } = req.body
+        // 1. find user by email
+
+        const user = await getUserByEmail(email)
+        if (user?._id) {
+            const isPassMatched = verifyPassword(password, user.password)
+
+            if (isPassMatched) {
+                user.password = undefined //not sending user "password" to the frontend
+
+                return res.json({
+                    status: 'success',
+                    message: 'logged in',
+                    user,
+                })
+            }
+        }
+
+        res.json({
+            status: 'success',
+            message: 'working in login',
+        })
+    } catch (error) {
+        console.log(error)
+        res.json({
+            status: 'error',
+            message: 'error, unable to process',
+        })
+    }
+})
 
 export default Router

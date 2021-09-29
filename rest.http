@@ -63,3 +63,12 @@ Content-Type: application/json
 
 }
 
+###login
+
+POST  http://localhost:8000/api/v1/user/login
+Content-Type: application/json
+
+{
+    "email" : "ee3h@a.com",
+    "password": "password"
+}

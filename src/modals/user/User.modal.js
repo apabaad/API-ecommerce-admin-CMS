@@ -16,3 +16,7 @@ export const activeUser = (email) => {
         { new: true }
     )
 }
+
+export const getUserByEmail = (email) => {
+    return UserSchema.findOne({ email })
+}
