@@ -30,14 +30,14 @@ Router.all('/', (req, res, next) => {
 Router.post('/', newUserFormValidation, async (req, res) => {
     try {
         // hash password
-        const t1 = Date.now()
+        // const t1 = Date.now()
         const hashPass = hashPassword(req.body.password)
-        const t2 = Date.now()
-        console.log(hashPass, 'time taken = ' + (t2 - t1) + 'ms')
+        // const t2 = Date.now()
+        // console.log(hashPass, 'time taken = ' + (t2 - t1) + 'ms')
 
         req.body.password = hashPass
         const result = await createUser(req.body)
-        console.log('result', result)
+        // console.log('result', result)
         if (result?._id) {
             // create unique code
             const otpLength = 8
@@ -141,8 +141,8 @@ Router.post('/login', adminLoginValidation, async (req, res) => {
         }
 
         res.json({
-            status: 'success',
-            message: 'working in login',
+            status: 'error',
+            message: 'Invalid login',
         })
     } catch (error) {
         console.log(error)
