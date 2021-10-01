@@ -23,6 +23,8 @@ import {
     emailVerificationWelcome,
 } from '../helpers/mail.helper.js'
 
+import { getJWTs } from '../helpers/jwt.helper.js'
+
 Router.all('/', (req, res, next) => {
     next()
 })
@@ -132,10 +134,12 @@ Router.post('/login', adminLoginValidation, async (req, res) => {
             if (isPassMatched) {
                 user.password = undefined //not sending user "password" to the frontend
 
+                const tokens = await getJWTs({ _id: user._id, email })
                 return res.json({
                     status: 'success',
                     message: 'logged in',
                     user,
+                    tokens,
                 })
             }
         }
