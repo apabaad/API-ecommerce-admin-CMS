@@ -32,6 +32,15 @@ export const createRefreshJWT = async ({ _id, email }) => {
     return false
 }
 
+export const verifyRefreshJWT = (token) => {
+    try {
+        return jwt.verify(token, process.env.JWT_REFRESH_JWT)
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
+
 export const getJWTs = async (userInfo) => {
     const accessJWT = await createAccessJWT(userInfo)
     const refreshJWT = await createRefreshJWT(userInfo)

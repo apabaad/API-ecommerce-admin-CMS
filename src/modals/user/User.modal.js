@@ -26,3 +26,7 @@ export const setRefreshJWT = (_id, refreshJWT) => {
         refreshJWT,
     })
 }
+
+export const getUser = (filter) => {
+    return UserSchema.findOne({ filter })
+}
