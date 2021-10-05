@@ -75,6 +75,7 @@ Content-Type: application/json
 }
 
 ### tokens API
+###request for a new acceccJWT
 
 GET  http://localhost:8000/api/v1/token
 Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVlM2hAYS5jb20iLCJpYXQiOjE2MzMzODg1MDcsImV4cCI6MTYzNTk4MDUwN30.zd72dgTC3_SwRfi7UOmy71zTXzIcyOSrWVmlbHgI4QM
