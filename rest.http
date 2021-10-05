@@ -45,6 +45,7 @@ Content-Type: application/json
 ### fetch category / new category
 
 GET http://localhost:8000/api/v1/category
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVlM2hAYS5jb20iLCJpYXQiOjE2MzM0MDIxNDEsImV4cCI6MTYzMzQwMzA0MX0.Whmq05WfdPblScD6bvnmBREoGnLHcfxzpqjcYzLMncw
 
 ### delete categoty
 
