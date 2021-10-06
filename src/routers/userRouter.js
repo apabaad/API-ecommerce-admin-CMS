@@ -25,8 +25,24 @@ import {
 
 import { getJWTs } from '../helpers/jwt.helper.js'
 
-Router.all('/', (req, res, next) => {
-    next()
+import { isAdminAuth } from '../middlewares/auth.middleware.js'
+
+Router.get('/', isAdminAuth, (req, res) => {
+    try {
+        const user = req.user
+        user.refreshJWT = undefined
+        user.password = undefined
+        res.json({
+            status: 'success',
+            message: 'user profile fetched',
+            user,
+        })
+    } catch (error) {
+        res.status(500).json({
+            status: 'error',
+            message: 'Internal server error.',
+        })
+    }
 })
 
 Router.post('/', newUserFormValidation, async (req, res) => {

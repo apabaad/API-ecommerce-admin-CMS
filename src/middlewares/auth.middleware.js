@@ -15,10 +15,12 @@ export const isAdminAuth = async (req, res, next) => {
                 })
             }
             if (decoded?.email) {
+                // is token in session db
                 const session = await getSession({ token: authorization })
                 if (session?._id) {
                     const user = await getUserById(session.userId)
                     if (user?.role === 'admin') {
+                        req.user = user //adding new property 'user' to req object
                         return next()
                     }
                 }
