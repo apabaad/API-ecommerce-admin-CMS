@@ -17,6 +17,21 @@ Content-Type: application/json
     "address": "kent street, Belmore",
     "gender": "male" 
 }
+###  update User
+PUT  http://localhost:8000/api/v1/user
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVlM2hAYS5jb20iLCJpYXQiOjE2MzM5MDE4MDQsImV4cCI6MTYzMzkwMjcwNH0.P0awX1cm2DcoTymxAQQouxO8lp_sYwq-SApgeY_Nb-s
+
+{
+    "fname" : "ruupesh",
+    "lname" : "Adhikari",
+    "dob" : "2000-02-20", 
+    "email" : "ee3h@a.com", 
+    
+    "phone": "040000000", 
+    "address": "kent street, Belmore",
+    "gender": "male" 
+}
 
 ###email verification api
 

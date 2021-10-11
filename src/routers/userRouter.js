@@ -5,6 +5,7 @@ import {
     activeUser,
     createUser,
     getUserByEmail,
+    updateUserById,
 } from '../modals/user/User.modal.js'
 import {
     createUniqueReset,
@@ -15,6 +16,7 @@ import {
     newUserFormValidation,
     emailVerificationValidation,
     adminLoginValidation,
+    UpdateUserFormValidation,
 } from '../middlewares/validation.middleware.js'
 import { hashPassword, verifyPassword } from '../helpers/bcrypt.helper.js'
 import { getRandomOTP } from '../helpers/otp.helper.js'
@@ -169,6 +171,35 @@ Router.post('/login', adminLoginValidation, async (req, res) => {
         res.json({
             status: 'error',
             message: 'error, unable to process',
+        })
+    }
+})
+
+Router.put('/', isAdminAuth, UpdateUserFormValidation, async (req, res) => {
+    try {
+        const { _id } = req.user
+
+        const result = await updateUserById(_id, req.body)
+        // console.log('result', result)
+        if (result?._id) {
+            //    update user with email notification
+            return res.json({
+                status: 'success',
+                message: 'Your profile has been updated',
+                result,
+            })
+        }
+
+        res.json({
+            status: 'error',
+            message: 'Unable to process your request',
+        })
+    } catch (error) {
+        console.log(error.message)
+
+        res.json({
+            status: 'error',
+            message: 'error. unable to process',
         })
     }
 })
