@@ -28,6 +28,7 @@ mongoClient()
 import userRouter from './src/routers/userRouter.js'
 import categoryRouter from './src/routers/categoryRouter.js'
 import tokenRouter from './src/routers/tokenRouter.js'
+import productRouter from './src/routers/productRouter.js'
 
 import { isAdminAuth } from './src/middlewares/auth.middleware.js'
 // user routers
@@ -36,6 +37,9 @@ app.use('/api/v1/user', userRouter)
 // category router
 app.use('/api/v1/category', isAdminAuth, categoryRouter)
 app.use('/api/v1/token', tokenRouter)
+
+// product router
+app.use('/api/v1/product', productRouter)
 
 app.use('/', (req, res) => {
     res.send('You have reached the end of router list')

@@ -1,0 +1,25 @@
+### Product apis
+
+### Get product(s)
+GET http://localhost:8000/api/v1/product
+
+
+//status:"",
+title, price, qty, description, categories, salePrice, salesStartDate, saleEndDate, brand, 
+//slug, image
+### Create a product
+POST http://localhost:8000/api/v1/product
+Content-Type: application/json
+
+{
+"status":true,
+"title":"samsung tv",
+"price":500,
+"qty":50,
+"description":"Save your money",
+"categories":"electoronics",
+"salePrice":0,
+"saleStartDate":"",
+"saleEndDate":"",
+"brand":"samsung"
+}
