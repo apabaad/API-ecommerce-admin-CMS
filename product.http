@@ -13,7 +13,7 @@ Content-Type: application/json
 
 {
 "status":true,
-"title":"samsung tv",
+"title":"samsungs tv",
 "price":500,
 "qty":50,
 "description":"Save your money",

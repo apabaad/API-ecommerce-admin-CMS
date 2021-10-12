@@ -13,6 +13,31 @@ import {
 
 import { newProductFormValidation } from '../middlewares/productValidation.middleware.js'
 
+// get all or single product
+
+Router.get('/', async (req, res) => {
+    try {
+        const { slug } = req.params
+        let result = null
+        if (slug) {
+            result = await getSingleProduct({ slug })
+        } else {
+            result = await getProducts()
+        }
+
+        res.json({
+            status: 'success',
+            message: 'Product as requested',
+            result,
+        })
+    } catch (error) {
+        res.json({
+            status: 'error',
+            message: error.message,
+        })
+    }
+})
+
 // create new product
 Router.post('/', newProductFormValidation, async (req, res) => {
     try {
