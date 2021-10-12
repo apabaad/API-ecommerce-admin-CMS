@@ -69,4 +69,57 @@ Router.post('/', newProductFormValidation, async (req, res) => {
     }
 })
 
+// Update product //put to update all doc based on id
+Router.put('/', async (req, res) => {
+    try {
+        console.log(req.body)
+
+        // 1. server side validation
+        // 2. Update in db
+
+        const { _id, ...product } = req.body
+        const result = await await updateProductById(_id, product)
+
+        if (result?._id) {
+            return res.json({
+                status: 'success',
+                message: 'product added',
+            })
+        }
+        res.json({
+            status: 'success',
+            message: 'still not done',
+        })
+    } catch (error) {
+        res.json({
+            status: 'error',
+            message: error.message,
+        })
+    }
+})
+
+// Delete product
+Router.delete('/:_id', async (req, res) => {
+    try {
+        const { _id } = req.params
+
+        const product = await deleteProductById(_id)
+        if (product?._id) {
+            return res.json({
+                status: 'success',
+                message: 'The product has been deleted',
+            })
+        }
+
+        res.json({
+            status: 'error',
+            message: 'Unable to delete. Try later.',
+        })
+    } catch (error) {
+        res.json({
+            status: 'error',
+            message: error.message,
+        })
+    }
+})
 export default Router
