@@ -1,7 +1,7 @@
 ### Product apis
 
 ### Get product(s)
-GET http://localhost:8000/api/v1/product
+GET http://localhost:8000/api/v1/product/
 
 
 //status:"",
@@ -13,7 +13,7 @@ Content-Type: application/json
 
 {
 "status":true,
-"title":"samsungs tv",
+"title":"samg tv",
 "price":500,
 "qty":50,
 "description":"Save your money",
@@ -23,3 +23,6 @@ Content-Type: application/json
 "saleEndDate":"",
 "brand":"samsung"
 }
+
+### Delete product(s)
+DELETE  http://localhost:8000/api/v1/product/6165811ef1fba48de7d5530a

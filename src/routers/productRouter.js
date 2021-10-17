@@ -15,7 +15,7 @@ import { newProductFormValidation } from '../middlewares/productValidation.middl
 
 // get all or single product
 
-Router.get('/', async (req, res) => {
+Router.get('/:slug?', async (req, res) => {
     try {
         const { slug } = req.params
         let result = null
@@ -87,7 +87,7 @@ Router.put('/', async (req, res) => {
             })
         }
         res.json({
-            status: 'success',
+            status: 'Error',
             message: 'still not done',
         })
     } catch (error) {
