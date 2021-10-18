@@ -50,7 +50,7 @@ const ProductSchema = mongoose.Schema({
         max: 10000,
         default: 0,
     },
-    salesStartDate: {
+    saleStartDate: {
         type: Date,
     },
     saleEndDate: {

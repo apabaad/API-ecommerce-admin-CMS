@@ -11,7 +11,10 @@ import {
     updateProductById,
 } from '../modals/product/Product.model.js'
 
-import { newProductFormValidation } from '../middlewares/productValidation.middleware.js'
+import {
+    newProductFormValidation,
+    updateProductFormValidation,
+} from '../middlewares/productValidation.middleware.js'
 
 // get all or single product
 
@@ -70,7 +73,7 @@ Router.post('/', newProductFormValidation, async (req, res) => {
 })
 
 // Update product //put to update all doc based on id
-Router.put('/', async (req, res) => {
+Router.put('/', updateProductFormValidation, async (req, res) => {
     try {
         console.log(req.body)
 
@@ -78,12 +81,12 @@ Router.put('/', async (req, res) => {
         // 2. Update in db
 
         const { _id, ...product } = req.body
-        const result = await await updateProductById(_id, product)
+        const result = await updateProductById(_id, product)
 
         if (result?._id) {
             return res.json({
                 status: 'success',
-                message: 'product added',
+                message: 'product updated',
             })
         }
         res.json({
