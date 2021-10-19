@@ -146,33 +146,46 @@ Router.post(
 )
 
 // Update product //put to update all doc based on id
-Router.put('/', updateProductFormValidation, async (req, res) => {
-    try {
-        console.log(req.body)
+Router.put(
+    '/',
+    upload.array('images', 5),
+    updateProductFormValidation,
+    async (req, res) => {
+        try {
+            const basePath = `${req.protocol}://${req.get('host')}/img/product/`
+            // end handle image path
 
-        // 1. server side validation
-        // 2. Update in db
+            let images = []
+            const files = req.files
+            files.length &&
+                files.map((img) => {
+                    const fullPath = basePath + img.filename
+                    images.push(fullPath)
+                })
+            // 1. server side validation
+            // 2. Update in db
 
-        const { _id, ...product } = req.body
-        const result = await updateProductById(_id, product)
+            const { _id, ...product } = req.body
+            const result = await updateProductById(_id, product)
 
-        if (result?._id) {
-            return res.json({
-                status: 'success',
-                message: 'product updated',
+            if (result?._id) {
+                return res.json({
+                    status: 'success',
+                    message: 'product updated',
+                })
+            }
+            res.json({
+                status: 'Error',
+                message: 'still not done',
+            })
+        } catch (error) {
+            res.json({
+                status: 'error',
+                message: error.message,
             })
         }
-        res.json({
-            status: 'Error',
-            message: 'still not done',
-        })
-    } catch (error) {
-        res.json({
-            status: 'error',
-            message: error.message,
-        })
     }
-})
+)
 
 // Delete product
 Router.delete('/:_id', async (req, res) => {

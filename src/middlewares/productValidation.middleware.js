@@ -13,13 +13,14 @@ const _id = Joi.string().max(30)
 
 export const newProductFormValidation = (req, res, next) => {
     console.log(req.body)
+
     const schema = Joi.object({
         status: bool,
         title,
         price: price,
         qty: num,
         description,
-        categories: Joi.array(),
+        categories: longStr.required(),
         salePrice: num,
         saleStartDate: date,
         saleEndDate: date,
@@ -44,8 +45,11 @@ export const updateProductFormValidation = (req, res, next) => {
         price: price,
         qty: num,
         images: Joi.array(),
+        imgToDelete: Joi.array(),
+        oldImages: longStr,
         description,
-        categories: Joi.array(),
+        categories: longStr.required(),
+
         salePrice: num,
         saleStartDate: date,
         saleEndDate: date,
@@ -60,5 +64,11 @@ export const updateProductFormValidation = (req, res, next) => {
             message: result.error.message,
         })
     }
+
+    const { categories, images, imgToDelete } = req.body
+    req.body.categories = categories.split(',')
+    req.body.images = images.split(',')
+    req.body.imgToDelete = imgToDelete.split(',')
+
     next()
 }
