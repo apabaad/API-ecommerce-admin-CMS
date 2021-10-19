@@ -152,21 +152,28 @@ Router.put(
     updateProductFormValidation,
     async (req, res) => {
         try {
-            const basePath = `${req.protocol}://${req.get('host')}/img/product/`
-            // end handle image path
+            const { imgToDelete, oldImages, _id, ...product } = req.body
+            // filtering image to delete
 
-            let images = []
+            const filterImageList = oldImages?.filter(
+                (itm) => !imgToDelete.includes(itm)
+            )
+
+            // handle image path
+            const basePath = `${req.protocol}://${req.get('host')}/img/product/`
+
+            let images = [...filterImageList]
             const files = req.files
+
             files.length &&
                 files.map((img) => {
                     const fullPath = basePath + img.filename
                     images.push(fullPath)
                 })
-            // 1. server side validation
+
             // 2. Update in db
 
-            const { _id, ...product } = req.body
-            const result = await updateProductById(_id, product)
+            const result = await updateProductById(_id, { ...product, images })
 
             if (result?._id) {
                 return res.json({

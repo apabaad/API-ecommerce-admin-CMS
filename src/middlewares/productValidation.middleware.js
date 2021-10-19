@@ -35,6 +35,7 @@ export const newProductFormValidation = (req, res, next) => {
             message: result.error.message,
         })
     }
+    req.body.categories = req.body.categories?.split(',')
     next()
 }
 export const updateProductFormValidation = (req, res, next) => {
@@ -44,9 +45,9 @@ export const updateProductFormValidation = (req, res, next) => {
         title,
         price: price,
         qty: num,
-        images: Joi.array(),
-        imgToDelete: Joi.array(),
-        oldImages: longStr,
+        images: longStr,
+        imgToDelete: longStr.allow(''),
+        oldImages: longStr.allow(''),
         description,
         categories: longStr.required(),
 
@@ -65,10 +66,11 @@ export const updateProductFormValidation = (req, res, next) => {
         })
     }
 
-    const { categories, images, imgToDelete } = req.body
-    req.body.categories = categories.split(',')
-    req.body.images = images.split(',')
-    req.body.imgToDelete = imgToDelete.split(',')
+    const { categories, images, imgToDelete, oldImages } = req.body
+    req.body.categories = categories?.split(',')
+    req.body.images = images?.split(',')
+    req.body.imgToDelete = imgToDelete?.split(',')
+    req.body.oldImages = oldImages?.split(',')
 
     next()
 }
