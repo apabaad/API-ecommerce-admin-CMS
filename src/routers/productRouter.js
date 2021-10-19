@@ -1,5 +1,6 @@
 import express from 'express'
 import slugify from 'slugify'
+import multer from 'multer'
 const Router = express.Router()
 import {
     createProduct,
@@ -41,36 +42,94 @@ Router.get('/:slug?', async (req, res) => {
     }
 })
 
-// create new product
-Router.post('/', newProductFormValidation, async (req, res) => {
-    try {
-        // create slug
+// create new product for non multi part
+// Router.post('/', newProductFormValidation, async (req, res) => {
+//     try {
+//         // create slug
 
-        const { title } = req.body
-        const slug = slugify(title, { lower: true })
+//         const { title } = req.body
+//         const slug = slugify(title, { lower: true })
 
-        const result = await createProduct({ ...req.body, slug })
-        if (result?._id) {
+//         const result = await createProduct({ ...req.body, slug })
+//         if (result?._id) {
+//             res.json({
+//                 status: 'success',
+//                 message: 'Product added',
+//             })
+//         }
+//         res.json({
+//             status: 'error',
+//             message: 'Unable to add product.',
+//         })
+//     } catch (error) {
+//         let msg = error.message
+//         if (msg.includes('E11000 duplicate key error collection')) {
+//             msg = 'The product slug already exists.'
+//         }
+//         res.json({
+//             status: 'error',
+//             message: msg,
+//         })
+//     }
+// })
+
+// multer config
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        let error = null
+        // validation
+
+        cb(error, 'public/img/product')
+    },
+    filename: function (req, file, cb) {
+        const fileNameArg = file.originalname.split('.')
+        const name = fileNameArg[0]
+        const ext = fileNameArg[fileNameArg.length - 1]
+        const uniqueVal = Date.now()
+
+        const fileName = slugify(name) + uniqueVal + '.' + ext
+        cb(null, fileName)
+    },
+})
+
+const upload = multer({ storage })
+
+// create form for multi part/ form data i.e enctype: multipart/formdata
+
+Router.post(
+    '/',
+    upload.array('images', 5),
+    newProductFormValidation,
+    async (req, res) => {
+        try {
+            // create slug
+
+            const { title } = req.body
+            const slug = slugify(title, { lower: true })
+
+            const result = await createProduct({ ...req.body, slug })
+            if (result?._id) {
+                res.json({
+                    status: 'success',
+                    message: 'Product added',
+                })
+            }
             res.json({
-                status: 'success',
-                message: 'Product added',
+                status: 'error',
+                message: 'Unable to add product.',
+            })
+        } catch (error) {
+            let msg = error.message
+            if (msg.includes('E11000 duplicate key error collection')) {
+                msg = 'The product slug already exists.'
+            }
+            res.json({
+                status: 'error',
+                message: msg,
             })
         }
-        res.json({
-            status: 'error',
-            message: 'Unable to add product.',
-        })
-    } catch (error) {
-        let msg = error.message
-        if (msg.includes('E11000 duplicate key error collection')) {
-            msg = 'The product slug already exists.'
-        }
-        res.json({
-            status: 'error',
-            message: msg,
-        })
     }
-})
+)
 
 // Update product //put to update all doc based on id
 Router.put('/', updateProductFormValidation, async (req, res) => {

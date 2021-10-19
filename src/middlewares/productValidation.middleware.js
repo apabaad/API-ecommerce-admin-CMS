@@ -13,7 +13,7 @@ const _id = Joi.string().max(30)
 
 export const newProductFormValidation = (req, res, next) => {
     const schema = Joi.object({
-        status: bool.required(),
+        status: bool,
         title,
         price: price,
         qty: num,
