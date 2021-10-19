@@ -12,6 +12,7 @@ const num = Joi.number().max(10000)
 const _id = Joi.string().max(30)
 
 export const newProductFormValidation = (req, res, next) => {
+    console.log(req.body)
     const schema = Joi.object({
         status: bool,
         title,

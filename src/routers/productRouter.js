@@ -102,14 +102,28 @@ Router.post(
     newProductFormValidation,
     async (req, res) => {
         try {
-            // create slug
+            // handle image path
+            // const pathName = 'public/img/product/'
+            // const basePath = "http://localhost:8000/img/product"
+            const basePath = `${req.protocol}://${req.get('host')}/img/product/`
+            // end handle image path
 
+            let images = []
+            const files = req.files
+            files.length &&
+                files.map((img) => {
+                    const fullPath = basePath + img.filename
+                    images.push(fullPath)
+                })
+
+            // create slug
             const { title } = req.body
             const slug = slugify(title, { lower: true })
 
-            const result = await createProduct({ ...req.body, slug })
+            // store in db
+            const result = await createProduct({ ...req.body, slug, images })
             if (result?._id) {
-                res.json({
+                return res.json({
                     status: 'success',
                     message: 'Product added',
                 })
