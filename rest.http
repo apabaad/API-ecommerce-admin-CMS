@@ -95,3 +95,23 @@ Content-Type: application/json
 GET  http://localhost:8000/api/v1/token
 Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVlM2hAYS5jb20iLCJpYXQiOjE2MzMzODg1MDcsImV4cCI6MTYzNTk4MDUwN30.zd72dgTC3_SwRfi7UOmy71zTXzIcyOSrWVmlbHgI4QM
 
+### Payment option API list
+
+### Get Payment options
+
+GET  http://localhost:8000/api/v1/payment-option
+
+### POST Payment options
+
+POST  http://localhost:8000/api/v1/payment-option
+Content-Type: application/json
+
+{
+    "status":false,
+    "name":"Pay by Credit CArd",
+    "info": "Hello hello"
+}
+
+###Delete payment
+
+DELETE http://localhost:8000/api/v1/payment-option/616f6fb05af625c21d8dc1aa
